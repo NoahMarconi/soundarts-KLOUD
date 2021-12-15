@@ -13,3 +13,14 @@ task("verify-token", "Verifies Token Contract")
         }
     );
 
+task("verify-minter", "Verifies minter Contract")
+    .setAction(
+        async (args, hre) => {
+            await hre.run("verify:verify", {
+                address: config.minterAddress,
+                constructorArguments: [config.tokenAddress, config.payees, config.shares],
+                contract: "contracts/Minter.sol:Minter"
+            });
+        }
+    );
+

@@ -20,12 +20,22 @@ npx hardhat deploy-basetoken --network goerli
 
 Then add its address to the same config file before running:
 
+
+```
+npx hardhat verify-token --network goerli   
+```
+
+Minter next
+
 ```
 npx hardhat deploy-minter --network goerli
 ```
 
 Then add minter address to the config.
 
+```
+npx hardhat verify-minter --network goerli   
+```
 
 ## Initialize
 
