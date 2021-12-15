@@ -2,8 +2,8 @@ import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-ethers";
 import { Logger } from "tslog";
 import config from "./config/config";
-import { BaseToken, Minter } from "../dist/types";
 import { ethers } from "ethers";
+import { BaseToken, Minter } from "../dist/types";
 
 const logger: Logger = new Logger();
 

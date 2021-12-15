@@ -15,13 +15,13 @@ npm run build
 First fill out the config file in `./scripts/config/config.ts`
 
 ```
-npx hardhat deploy-basetoken
+npx hardhat deploy-basetoken --network goerli
 ```
 
 Then add its address to the same config file before running:
 
 ```
-npx hardhat deploy-minter
+npx hardhat deploy-minter --network goerli
 ```
 
 Then add minter address to the config.
@@ -31,20 +31,20 @@ Then add minter address to the config.
 
 
 ```
-npx hardhat set-price --etherprice "0.05"
-npx hardhat grant-minter-role
-npx hardhat set-max-supply --maxsupply 5000
+npx hardhat set-price --etherprice "0.05" --network goerli
+npx hardhat grant-minter-role --network goerli
+npx hardhat set-max-supply --maxsupply 5000 --network goerli
 ```
 
 ## Sales
 
 ```
 ## Whitelist sale
-npx hardhat set-minter-signer
-npx hardhat start-signed-mint
+npx hardhat set-minter-signer --network goerli
+npx hardhat start-signed-mint --network goerli
 
 ## Full sale
-npx hardhat start-mint
+npx hardhat start-mint --network goerli
 ```
 
 ## Metadata

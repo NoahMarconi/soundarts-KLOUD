@@ -58,6 +58,7 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
 
         tokenContract = _tokenContract;
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setupRole(ADMIN_ROLE, _msgSender());
     }
 
 

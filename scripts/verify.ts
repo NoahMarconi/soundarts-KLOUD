@@ -1,15 +1,15 @@
 import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-ethers";
-import ownerConfig from "./config/config";
+import config from "./config/config";
 
 task("verify-token", "Verifies Token Contract")
     .setAction(
         async (args, hre) => {
-            // await hre.run("verify:verify", {
-            //     address: ownerConfig.tokenAddress,
-            //     constructorArguments: tokenConf,
-            //     contract: "contracts/[CONTRACT].sol:[CONTRACT]"
-            // });
+            await hre.run("verify:verify", {
+                address: config.tokenAddress,
+                constructorArguments: [config.name, config.symbol],
+                contract: "contracts/BaseToken.sol:BaseToken"
+            });
         }
     );
 

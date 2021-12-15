@@ -22,7 +22,7 @@ task("deploy-minter", "Deploys Minter contract")
     .setAction(
         async (args, hre) => {
             const factory = await hre.ethers.getContractFactory(`contracts/Minter.sol:Minter`);
-            const instance = await factory.deploy(config.minterAddress, config.payees, config.shares);
+            const instance = await factory.deploy(config.tokenAddress, config.payees, config.shares);
 
             await instance.deployed();
 

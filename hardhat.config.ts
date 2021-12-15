@@ -16,6 +16,7 @@ import "./scripts/push-metadata-update";
 import "./scripts/verify";
 import "./scripts/send-eth";
 import "./scripts/set-baseuri";
+import "./scripts/initialize-sale";
 
 
 const ALCHEMY_PROJECT_ID = process.env.ALCHEMY_PROJECT_ID || "";
@@ -52,6 +53,11 @@ const config: HardhatUserConfig = {
     },
     rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_RINKEBY_PROJECT_ID}`,
+      accounts: [DEPLOYER_PRIVATE_KEY],
+      gasPrice: utils.parseUnits("100", "gwei").toNumber(),
+    },
+    goerli: {
+      url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_PROJECT_ID}`,
       accounts: [DEPLOYER_PRIVATE_KEY],
       gasPrice: utils.parseUnits("100", "gwei").toNumber(),
     },
