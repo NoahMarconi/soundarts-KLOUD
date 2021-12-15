@@ -16,7 +16,11 @@ import "./scripts/push-metadata-update";
 import "./scripts/verify";
 import "./scripts/send-eth";
 import "./scripts/set-baseuri";
-import "./scripts/initialize-sale";
+import "./scripts/gen-whitelist";
+import("./scripts/initialize-sale")
+  .catch((err) => {
+    console.log("./scripts/initialize-sale not imported until after build completes")
+  });
 
 
 const ALCHEMY_PROJECT_ID = process.env.ALCHEMY_PROJECT_ID || "";
