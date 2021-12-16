@@ -18,9 +18,10 @@ import "./scripts/send-eth";
 import "./scripts/set-baseuri";
 import "./scripts/gen-whitelist";
 import("./scripts/initialize-sale")
-  .catch((err) => {
-    console.log("./scripts/initialize-sale not imported until after build completes")
-  });
+.catch((err) => {
+  console.log("./scripts/initialize-sale not imported until after build completes")
+});
+import "./scripts/grant-roles";
 
 
 const ALCHEMY_PROJECT_ID = process.env.ALCHEMY_PROJECT_ID || "";

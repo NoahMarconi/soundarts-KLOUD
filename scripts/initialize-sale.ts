@@ -20,8 +20,7 @@ task("grant-minter-role", "Sets minter as MINTER_ROLE for token")
     .setAction(
         async (args, hre) => {
             const instance = await hre.ethers.getContractAt("BaseToken", config.tokenAddress) as BaseToken;
-            const minterInstance = await hre.ethers.getContractAt("Minter", config.minterAddress) as Minter;
-            await instance.grantRole(await minterInstance.ADMIN_ROLE(), config.minterAddress);
+            await instance.grantRole(await instance.MINTER_ROLE(), config.minterAddress);
         }
     );
 

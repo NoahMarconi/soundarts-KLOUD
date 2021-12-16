@@ -57,6 +57,17 @@ npx hardhat start-signed-mint --network goerli
 npx hardhat start-mint --network goerli
 ```
 
+## Roles
+
+```
+npx hardhat grant-token-admin --network goerli --address 0xd3682aC636f4FD74C9b904FC6C7cA8f22D2798f0
+npx hardhat grant-token-admin --network goerli --address 0xF331d6bcCDe6544C9bEd326c871960D6d84499E4
+npx hardhat grant-minter-admin --network goerli --address 0xd3682aC636f4FD74C9b904FC6C7cA8f22D2798f0
+npx hardhat grant-minter-admin --network goerli --address 0xF331d6bcCDe6544C9bEd326c871960D6d84499E4
+
+
+```
+
 ## Metadata
 
 
