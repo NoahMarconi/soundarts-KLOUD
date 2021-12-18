@@ -28,7 +28,7 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
 
     mapping (address => uint256) lastBlock;    // Track per minter which block they last minted.
     mapping (address => uint256) totalMinted;  // Track per minter total they minted.
-    mapping (bytes32 => bool) nonces;          // Track consumed non-sequential nonces.
+    mapping (bytes32 => bool) public nonces;   // Track consumed non-sequential nonces.
 
 
     /* --------------------------------- Events --------------------------------- */

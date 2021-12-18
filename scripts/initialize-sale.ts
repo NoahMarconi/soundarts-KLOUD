@@ -41,6 +41,25 @@ task("start-signed-mint", "Starts the whitelist signed mint sale")
         }
     );
 
+
+task("set-max-per-block", "Max purchase per address per block")
+    .addParam("max", "Sets maxBlockPurchase")
+    .setAction(
+        async (args, hre) => {
+            const minterInstance = await hre.ethers.getContractAt("Minter", config.minterAddress) as Minter;
+            await minterInstance.setMaxBlockPurchase(args.max);
+        }
+    );
+
+task("set-max-per-wallet", "Max purchase per address per wallet")
+    .addParam("max", "Sets maxWalletPurchase")
+    .setAction(
+        async (args, hre) => {
+            const minterInstance = await hre.ethers.getContractAt("Minter", config.minterAddress) as Minter;
+            await minterInstance.setMaxWalletPurchase(args.max);
+        }
+    );
+
 task("set-minter-signer", "Sets the address who approves whitelist participants")
     .setAction(
         async (args, hre) => {

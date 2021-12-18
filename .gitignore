@@ -7,4 +7,4 @@ cache
 artifacts
 dist
 
-whitelist/tosign/
+whitelist/
