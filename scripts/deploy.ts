@@ -29,3 +29,22 @@ task("deploy-minter", "Deploys Minter contract")
             logger.info(instance.address);
         }
     );
+
+task("deploy-auction", "Deploys Auction contract")
+    .setAction(
+        async (args, hre) => {
+            const factory = await hre.ethers.getContractFactory(`contracts/NounsAuctionHouse.sol:NounsAuctionHouse`);
+            const instance = await factory.deploy(
+                config.tokenAddress,
+                config.wethAddress,
+                config.timeBuffer,
+                config.reservePrice,
+                config.minBidIncrementPercentage,
+                config.duration,
+            );
+
+            await instance.deployed();
+
+            logger.info(instance.address);
+        }
+    );

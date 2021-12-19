@@ -37,6 +37,19 @@ Then add minter address to the config.
 npx hardhat verify-minter --network goerli
 ```
 
+Auction Next
+
+```
+npx hardhat deploy-auction --network goerli 
+```
+
+Then add auction address to the config.
+
+```
+npx hardhat verify-auction --network goerli
+```
+
+
 ## Initialize
 
 
@@ -67,6 +80,9 @@ npx hardhat grant-token-admin --network goerli --address 0xd3682aC636f4FD74C9b90
 npx hardhat grant-token-admin --network goerli --address 0xF331d6bcCDe6544C9bEd326c871960D6d84499E4
 npx hardhat grant-minter-admin --network goerli --address 0xd3682aC636f4FD74C9b904FC6C7cA8f22D2798f0
 npx hardhat grant-minter-admin --network goerli --address 0xF331d6bcCDe6544C9bEd326c871960D6d84499E4
+
+
+npx hardhat transfer-auction-owner --network goerli --address 0xd3682aC636f4FD74C9b904FC6C7cA8f22D2798f0
 
 
 ```

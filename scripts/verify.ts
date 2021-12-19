@@ -24,3 +24,21 @@ task("verify-minter", "Verifies minter Contract")
         }
     );
 
+task("verify-auction", "Verifies auction Contract")
+    .setAction(
+        async (args, hre) => {
+            await hre.run("verify:verify", {
+                address: config.auctionAddress,
+                constructorArguments: [
+                    config.tokenAddress,
+                    config.wethAddress,
+                    config.timeBuffer,
+                    config.reservePrice,
+                    config.minBidIncrementPercentage,
+                    config.duration,
+                ],
+                contract: "contracts/NounsAuctionHouse.sol:NounsAuctionHouse"
+            });
+        }
+    );
+
