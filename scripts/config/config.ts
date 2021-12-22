@@ -2,14 +2,14 @@ import { util } from "chai";
 import { utils } from "ethers";
 
 export default {
-    name: "SA Token",
-    symbol: "SA",
+    name: "KLOUD_2021_5000",
+    symbol: "KLOUD",
     baseUri: "",
     maxSupply: 5000,
-    price: utils.parseEther("0.06"),
-    tokenAddress: "0xB8Da418FFC2Cb675B8B3d73dca0E3f10811FBbdD",
-    minterAddress: "0x60cF6b2DEd19D72aA398807E89524D1CdF470F20",
-    auctionAddress: "0xF7D2dD0b42e2eCd003B7560f1b10Aea7e5a2A021",
+    price: utils.parseEther("0.25"),
+    tokenAddress: "0x14A90EBD78A95789C14729b5Af269bBbC90fda56",
+    minterAddress: "0x041e636595CFA3b11E2a27E07A0848C836157551",
+    auctionAddress: "0x8D4EA20CDF9A35BA7c7A5990C826b049334dDD17",
     timeBuffer: 600,
     reservePrice: utils.parseEther("2"),
     minBidIncrementPercentage: 5,

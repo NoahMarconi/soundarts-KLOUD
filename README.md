@@ -64,10 +64,10 @@ npx hardhat set-max-supply --maxsupply 5000 --network goerli
 ```
 ## Whitelist sale
 npx hardhat set-minter-signer --network goerli
-npx hardhat start-signed-mint --network goerli
 npx hardhat set-max-per-wallet --max 8 --network goerli
 npx hardhat set-max-per-block --max 8 --network goerli
 
+npx hardhat start-signed-mint --network goerli
 
 ## Full sale
 npx hardhat start-mint --network goerli

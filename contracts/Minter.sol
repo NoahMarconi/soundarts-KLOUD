@@ -34,7 +34,7 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
     /* --------------------------------- Events --------------------------------- */
 
     event LogPriceUpdated(uint256 newPrice);
-    event LogMint(address indexed sender, uint256 indexed price, uint256 numberOfTokens);
+    event LogMint(address indexed sender, uint256 indexed price, uint256 numberMinted, uint256 totalMinted);
 
     /* -------------------------------- Modifiers ------------------------------- */
 
@@ -215,7 +215,7 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
             IBaseToken(tokenContract).mint(msg.sender);
         }
 
-        emit LogMint(msg.sender, price, numberOfTokens);
+        emit LogMint(msg.sender, price, numberOfTokens, IBaseToken(tokenContract).totalMinted());
 
         // Return the change.
         if(expectedValue < msg.value) {
