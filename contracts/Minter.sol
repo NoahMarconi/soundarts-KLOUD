@@ -22,7 +22,7 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
     address public mintSigner;         // Signer who may approve addresses to mint.
     uint256 public price;              // Ether price per token.
     uint256 public maxBlockPurchase;   // Max that may be purchased per block by one address.
-    uint public maxWalletPurchase;     // Total max that may be purchased by one address.
+    uint256 public maxWalletPurchase;  // Total max that may be purchased by one address.
     bool public saleIsActive;          // Sale live toggle.
     bool public signedMintIsActive;    // Whitelist/presale signed mint live toggle.
 

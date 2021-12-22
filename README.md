@@ -54,7 +54,7 @@ npx hardhat verify-auction --network goerli
 
 
 ```
-npx hardhat set-price --etherprice "0.05" --network goerli
+npx hardhat set-price --etherprice "0.125" --network goerli
 npx hardhat grant-minter-role --network goerli
 npx hardhat set-max-supply --maxsupply 5000 --network goerli
 ```

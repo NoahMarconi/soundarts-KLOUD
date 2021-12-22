@@ -6,7 +6,7 @@ export default {
     symbol: "KLOUD",
     baseUri: "",
     maxSupply: 5000,
-    price: utils.parseEther("0.25"),
+    price: utils.parseEther("0.125"),
     tokenAddress: "0x14A90EBD78A95789C14729b5Af269bBbC90fda56",
     minterAddress: "0x041e636595CFA3b11E2a27E07A0848C836157551",
     auctionAddress: "0x8D4EA20CDF9A35BA7c7A5990C826b049334dDD17",
