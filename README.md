@@ -59,6 +59,15 @@ npx hardhat grant-minter-role --network goerli
 npx hardhat set-max-supply --maxsupply 5000 --network goerli
 ```
 
+
+## Auction
+
+npx hardhat reserve-one --network goerli
+npx hardhat send-to-auction --tokenid "1" --network goerli
+npx hardhat create-auction --tokenid "1" --network goerli
+
+npx hardhat settle-auction --network goerli
+
 ## Sales
 
 ```
@@ -70,7 +79,22 @@ npx hardhat set-max-per-block --max 8 --network goerli
 npx hardhat start-signed-mint --network goerli
 
 ## Full sale
+npx hardhat start-signed-mint --network goerli
+npx hardhat set-price --etherprice "0.25" --network goerli
 npx hardhat start-mint --network goerli
+
+npx hardhat set-price --etherprice "0.225" --network goerli
+
+npx hardhat set-price --etherprice "0.2" --network goerli
+
+npx hardhat set-price --etherprice "0.175" --network goerli
+
+npx hardhat set-price --etherprice "0.15" --network goerli
+
+npx hardhat set-price --etherprice "0.125" --network goerli
+
+npx hardhat set-price --etherprice "0.1" --network goerli
+
 ```
 
 ## Roles

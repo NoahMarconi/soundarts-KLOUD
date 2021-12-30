@@ -3,7 +3,7 @@ import "@nomiclabs/hardhat-ethers";
 import { Logger } from "tslog";
 import config from "./config/config";
 import { ethers } from "ethers";
-import { BaseToken, Minter } from "../dist/types";
+import { BaseToken, Minter, NounsAuctionHouse } from "../dist/types";
 
 const logger: Logger = new Logger();
 
@@ -73,5 +73,40 @@ task("start-mint", "Starts the mint sale")
         async (args, hre) => {
             const minterInstance = await hre.ethers.getContractAt("Minter", config.minterAddress) as Minter;
             await minterInstance.flipSaleState();
+        }
+    );
+
+task("reserve-one", "Reserved 1 token for auction")
+    .setAction(
+        async (args, hre) => {
+            const minterInstance = await hre.ethers.getContractAt("Minter", config.minterAddress) as Minter;
+            await minterInstance.reserveTokens(1);
+        }
+    );
+
+task("send-to-auction", "Sends token to auction contract")
+    .addParam("tokenid", "Token id to transfer")
+    .setAction(
+        async (args, hre) => {
+            const [deployer]  = await hre.ethers.getSigners();
+            const token = await hre.ethers.getContractAt("BaseToken", config.tokenAddress) as BaseToken;
+            await token.transferFrom(deployer.address, config.auctionAddress, args.tokenid);
+        }
+    );
+
+task("create-auction", "Starts auction")
+    .addParam("tokenid", "Token id to sell")
+    .setAction(
+        async (args, hre) => {
+            const auction = await hre.ethers.getContractAt("NounsAuctionHouse", config.auctionAddress) as NounsAuctionHouse;
+            await auction.createAuction(args.tokenid);
+        }
+    );
+
+task("settle-auction", "Settles auction")
+    .setAction(
+        async (args, hre) => {
+            const auction = await hre.ethers.getContractAt("NounsAuctionHouse", config.auctionAddress) as NounsAuctionHouse;
+            await auction.settleAuction();
         }
     );
