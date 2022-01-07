@@ -10,7 +10,7 @@ task("set-baseuri", "set BaseUri")
     .addParam("baseuri", "Base URI to Set")
     .setAction(
         async (args, hre) => {
-            const instance = await hre.ethers.getContractAt("BaseToken", args.projectaddress);
+            const instance = await hre.ethers.getContractAt("KLOUD", args.projectaddress);
 
             await instance.setBaseURI(args.baseuri);
         }

@@ -19,7 +19,7 @@ task("set-price", "Sets Price for Minter Contract")
 task("grant-minter-role", "Sets minter as MINTER_ROLE for token")
     .setAction(
         async (args, hre) => {
-            const instance = await hre.ethers.getContractAt("BaseToken", config.tokenAddress) as BaseToken;
+            const instance = await hre.ethers.getContractAt("KLOUD", config.tokenAddress) as BaseToken;
             await instance.grantRole(await instance.MINTER_ROLE(), config.minterAddress);
         }
     );
@@ -28,7 +28,7 @@ task("set-max-supply", "Sets maxSupply on token")
     .addParam("maxsupply", "Sets token maxSupply")
     .setAction(
         async (args, hre) => {
-            const instance = await hre.ethers.getContractAt("BaseToken", config.tokenAddress) as BaseToken;
+            const instance = await hre.ethers.getContractAt("KLOUD", config.tokenAddress) as BaseToken;
             await instance.setMaxSupply(args.maxsupply);
         }
     );
@@ -89,7 +89,7 @@ task("send-to-auction", "Sends token to auction contract")
     .setAction(
         async (args, hre) => {
             const [deployer]  = await hre.ethers.getSigners();
-            const token = await hre.ethers.getContractAt("BaseToken", config.tokenAddress) as BaseToken;
+            const token = await hre.ethers.getContractAt("KLOUD", config.tokenAddress) as BaseToken;
             await token.transferFrom(deployer.address, config.auctionAddress, args.tokenid);
         }
     );

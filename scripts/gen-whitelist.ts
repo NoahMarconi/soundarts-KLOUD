@@ -22,9 +22,9 @@ export const readWhitelistCSV = (filePath: string): Promise<any[]> => {
     });
   };
 
-const signMintSignOff = async (signer: Signer, minter: string, maxPermitted: number) => {
+const signMintSignOff = async (contract: string, signer: Signer, minter: string, maxPermitted: number) => {
     const nonce = ethers.utils.id(uuidv4());
-    const hash =  ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode([ "address", "uint256", "bytes32" ], [ minter, maxPermitted, nonce ]));
+    const hash =  ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode([ "address", "address", "uint256", "bytes32" ], [ contract, minter, maxPermitted, nonce ]));
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
     return { signature, nonce };
   }
@@ -40,15 +40,13 @@ task("gen-whitelist", "Generates whitelist payloads for whitelisted addresses")
             for (let index = 0; index < whitelistData.length; index++) {
               const el = whitelistData[index];
               
-              for (let i = 0; i < 100; i++) {
-                console.log(i);
-                const signedPayload = await signMintSignOff(minterSigner, el.address, args.max);
-                const dir = `./whitelist/signed/${i}`;
+                const signedPayload = await signMintSignOff(config.minterAddress, minterSigner, el.address, args.max);
+                const dir = `./whitelist/signed`;
                 if (!existsSync(dir)){
                   mkdirSync(dir);
                 }
                 writeFileSync(
-                    `./whitelist/signed/${i}/${el.address}.json`,
+                    `./whitelist/signed/${el.address}.json`,
                     JSON.stringify({ ...signedPayload, maxPermitted: args.max }, null, 4)
                 );
               }

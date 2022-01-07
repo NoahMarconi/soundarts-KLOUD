@@ -8,7 +8,7 @@ task("verify-token", "Verifies Token Contract")
             await hre.run("verify:verify", {
                 address: config.tokenAddress,
                 constructorArguments: [config.name, config.symbol],
-                contract: "contracts/BaseToken.sol:BaseToken"
+                contract: "contracts/KLOUD.sol:KLOUD"
             });
         }
     );

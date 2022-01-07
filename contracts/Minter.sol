@@ -112,6 +112,12 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
     }
 
 
+    /* ------------------------------ Public Reveal ----------------------------- */
+
+    function finalizeReveal() public {
+        _finalizeStartingIndex(IBaseToken(tokenContract).maxSupply());
+    }
+
 
     /* ----------------------------- Whitelist Mint ----------------------------- */
 
@@ -141,9 +147,6 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
         sharedMintBehavior(numberOfTokens);
     }
 
-    function finalizeReveal() public {
-        _finalizeStartingIndex(IBaseToken(tokenContract).maxSupply());
-    }
 
     /* ------------------------------- Public Mint ------------------------------ */
 
@@ -168,11 +171,11 @@ contract Minter is AccessControlEnumerable, Provenance, PaymentSplitter {
         bytes32 nonce
     )
         public
-        pure
+        view
         returns(bytes32)
     {
         return ECDSA.toEthSignedMessageHash(
-            keccak256(abi.encode(sender, numberOfTokens, nonce))
+            keccak256(abi.encode(address(this), sender, numberOfTokens, nonce))
         );
     }
 

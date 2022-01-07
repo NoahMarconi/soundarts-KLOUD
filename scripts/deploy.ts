@@ -8,7 +8,7 @@ const logger: Logger = new Logger();
 task("deploy-basetoken", "Deploys BaseToken contract")
     .setAction(
         async (args, hre) => {
-            const factory = await hre.ethers.getContractFactory(`contracts/BaseToken.sol:BaseToken`);
+            const factory = await hre.ethers.getContractFactory(`contracts/KLOUD.sol:KLOUD`);
             const instance = await factory.deploy(config.name, config.symbol);
 
             await instance.deployed();

@@ -7,7 +7,7 @@ task("grant-token-admin", "Grants Default Admin Role")
     .addParam("address", "Address to grant role to")
     .setAction(
         async (args, hre) => {
-            const instance = await hre.ethers.getContractAt("BaseToken", config.tokenAddress) as BaseToken;
+            const instance = await hre.ethers.getContractAt("KLOUD", config.tokenAddress) as BaseToken;
             await instance.grantRole(await instance.DEFAULT_ADMIN_ROLE(), args.address);
         }
     );
