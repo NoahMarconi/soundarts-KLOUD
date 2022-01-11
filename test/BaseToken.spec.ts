@@ -6,7 +6,8 @@ import { solidity } from "ethereum-waffle";
 
 import {
   BaseToken__factory,
-  BaseToken
+  BaseToken,
+  KLOUD__factory
 } from "../dist/types/index";
 
 chai.use(solidity);
@@ -26,7 +27,7 @@ describe("BaseToken", function () {
   before(async function () {
     [deployer, minter, noPermission] = await ethers.getSigners();
 
-    baseTokenInstance = await (new BaseToken__factory(deployer)).deploy(name, symbol);
+    baseTokenInstance = await (new KLOUD__factory(deployer)).deploy(name, symbol);
     await baseTokenInstance.deployed();
     
     await baseTokenInstance.setMaxSupply(maxSupply);

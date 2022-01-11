@@ -40,19 +40,16 @@ task("gen-whitelist", "Generates whitelist payloads for whitelisted addresses")
             for (let index = 0; index < whitelistData.length; index++) {
               const el = whitelistData[index];
               
-                const signedPayload = await signMintSignOff(config.minterAddress, minterSigner, el.address, args.max);
-                const dir = `./whitelist/signed`;
-                if (!existsSync(dir)){
-                  mkdirSync(dir);
-                }
-                writeFileSync(
-                    `./whitelist/signed/${el.address}.json`,
-                    JSON.stringify({ ...signedPayload, maxPermitted: args.max }, null, 4)
-                );
+              const signedPayload = await signMintSignOff(config.minterAddress, minterSigner, el.address, args.max);
+              const dir = `./whitelist/signed`;
+              if (!existsSync(dir)){
+                mkdirSync(dir);
               }
+              writeFileSync(
+                  `./whitelist/signed/${el.address}.json`,
+                  JSON.stringify({ ...signedPayload, maxPermitted: args.max }, null, 4)
+              );
             }
-              
-
         }
     );
 

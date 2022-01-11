@@ -54,7 +54,7 @@ const config: HardhatUserConfig = {
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_PROJECT_ID}`,
       accounts: [DEPLOYER_PRIVATE_KEY],
-      gasPrice: utils.parseUnits("100", "gwei").toNumber(),
+      gasPrice: utils.parseUnits("150", "gwei").toNumber(),
     },
     rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_RINKEBY_PROJECT_ID}`,

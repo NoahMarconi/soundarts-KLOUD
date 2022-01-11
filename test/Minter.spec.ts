@@ -31,9 +31,9 @@ describe("Minter", function () {
   let baseTokenInstance: BaseToken;
   let minterInstance: Minter;
 
-  const signMintSignOff = async (signer: Signer, minter: string, maxPermitted: number) => {
+  const signMintSignOff = async (contract: string, signer: Signer, minter: string, maxPermitted: number) => {
     const nonce = ethers.utils.id(uuidv4());
-    const hash =  ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode([ "address", "uint256", "bytes32" ], [ minter, maxPermitted, nonce ]));
+    const hash =  ethers.utils.keccak256(ethers.utils.defaultAbiCoder.encode([ "address", "address", "uint256", "bytes32" ], [ contract, minter, maxPermitted, nonce ]));
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
     return { signature, nonce };
   }
@@ -140,7 +140,7 @@ describe("Minter", function () {
 
           it("should fail if number of tokens is 0", async function() {
             const maxPermitted = 1;
-            const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, maxPermitted);
+            const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, maxPermitted);
 
             await expect(minterInstance.connect(minter).signedMint(0, maxPermitted, signature, nonce))
               .to.be.revertedWith("Minter: numberOfTokens is 0");
@@ -150,7 +150,7 @@ describe("Minter", function () {
           it("should fail if price is set to 0", async function() {
             await minterInstance.connect(minterAdmin).setPrice(0);
             const maxPermitted = 1;
-            const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, maxPermitted);
+            const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, maxPermitted);
             await expect(minterInstance.connect(minter).signedMint(1, maxPermitted, signature, nonce))
             .to.be.revertedWith("Minter: price not set");
           });
@@ -164,14 +164,14 @@ describe("Minter", function () {
             it("should fail if not enough ether sent", async function() {
               
               const maxPermitted = 1;
-              const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, maxPermitted);
+              const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, maxPermitted);
               await expect(minterInstance.connect(minter).signedMint(1, maxPermitted, signature, nonce))
                 .to.be.revertedWith("Minter: Sent ether value is incorrect");
             });
   
             it("should refund if too much ether sent", async function() {
               const preBalance = await ethers.provider.getBalance(minter.address);
-              const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, 5);
+              const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, 5);
               const res = await minterInstance.connect(minter).signedMint(5, 5, signature, nonce, { value: ethers.utils.parseEther("1") });
               const receipt = await res.wait();
               const gasFee = receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
@@ -183,7 +183,7 @@ describe("Minter", function () {
   
             it("should fail if numberOfTokens surpasses maxSupply", async function() {
               const numberToMint = maxSupply as number + 1;
-              const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, numberToMint);
+              const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
               await expect(minterInstance.connect(minter).signedMint(numberToMint, numberToMint, signature, nonce, { value: ethers.BigNumber.from(price).mul(numberToMint)}))
                 .to.be.revertedWith("Minter: Purchase would exceed max supply");
             });
@@ -191,7 +191,7 @@ describe("Minter", function () {
             it("should mint to minter", async function() {
               const numberToMint = maxSupply;
               const totalCost = ethers.BigNumber.from(price).mul(numberToMint);
-              const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, numberToMint);
+              const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
               await minterInstance.connect(minter).signedMint(numberToMint, numberToMint, signature, nonce, { value: totalCost });
   
               expect(await ethers.provider.getBalance(minterInstance.address))
@@ -215,7 +215,7 @@ describe("Minter", function () {
               it("should fail if mint too many in a block", async function() {
               const numberToMint = 11;
               const totalCost = ethers.BigNumber.from(price).mul(numberToMint);
-              const { signature, nonce } = await signMintSignOff(mintSigner, minter.address, numberToMint);
+              const { signature, nonce } = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
               await expect(minterInstance.connect(minter).signedMint(numberToMint, numberToMint, signature, nonce, { value: totalCost }))
                   .to.be.revertedWith("Minter: maxBlockPurchase exceeded");
               });
@@ -225,12 +225,12 @@ describe("Minter", function () {
               it("should fail if mint too many per wallet", async function() {
                 const numberToMint = 10;
                 const totalCost = ethers.BigNumber.from(price).mul(numberToMint);
-                let res = await signMintSignOff(mintSigner, minter.address, numberToMint);
+                let res = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
                 await (await minterInstance.connect(minter).signedMint(numberToMint, numberToMint, res.signature, res.nonce, { value: totalCost })).wait();
-                res = await signMintSignOff(mintSigner, minter.address, numberToMint);
+                res = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
                 await (await minterInstance.connect(minter).signedMint(numberToMint, numberToMint, res.signature, res.nonce, { value: totalCost })).wait();
                 
-                res = await signMintSignOff(mintSigner, minter.address, numberToMint);
+                res = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
                 await expect(minterInstance.connect(minter).signedMint(1, numberToMint, res.signature, res.nonce, { value: totalCost }))
                   .to.be.revertedWith("Minter: Sender reached mint max");
               });
@@ -238,7 +238,7 @@ describe("Minter", function () {
               it("should permit up to block minting limit", async function() {
                 const numberToMint = 10;
                 const totalCost = ethers.BigNumber.from(price).mul(numberToMint);
-                const res = await signMintSignOff(mintSigner, minter.address, numberToMint);
+                const res = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
                 await (await minterInstance.connect(minter).signedMint(numberToMint, numberToMint, res.signature, res.nonce, { value: totalCost })).wait();
   
                 expect(await baseTokenInstance.balanceOf(minter.address)).to.be.equal(numberToMint);
@@ -247,9 +247,9 @@ describe("Minter", function () {
               it("should permit up to wallet minting limit", async function() {
                 const numberToMint = 10;
                 const totalCost = ethers.BigNumber.from(price).mul(numberToMint);
-                let res = await signMintSignOff(mintSigner, minter.address, numberToMint);
+                let res = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
                 await (await minterInstance.connect(minter).signedMint(numberToMint, numberToMint, res.signature, res.nonce, { value: totalCost })).wait();
-                res = await signMintSignOff(mintSigner, minter.address, numberToMint);
+                res = await signMintSignOff(minterInstance.address, mintSigner, minter.address, numberToMint);
                 await (await minterInstance.connect(minter).signedMint(numberToMint, numberToMint, res.signature, res.nonce, { value: totalCost })).wait();
   
                 expect(await baseTokenInstance.balanceOf(minter.address)).to.be.equal(numberToMint + numberToMint);

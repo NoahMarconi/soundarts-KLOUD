@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
-/// @dev KLOUD_2021_5000_20000 KLOUD is the artistical embodiment of limitless
+/// @dev WE_ARE_KLOUD
+///      KLOUD is the artistical embodiment of limitless
 ///      creativity in anonymity. With this NFT drop, the collector enters the
 ///      KLOUD, owning a unique visual & musical art piece derived from the
 ///      generative algorithm that is KLOUD x HOOKER x COMPUTER.
